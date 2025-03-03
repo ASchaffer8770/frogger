@@ -1,1 +1,1 @@
-Simple frogger game using function programming. Written in python using the pygame library.
+Simple frogger game using functional programming. Written in python using the pygame library.
