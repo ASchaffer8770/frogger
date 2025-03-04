@@ -22,14 +22,17 @@ clock = pygame.time.Clock()
 dt = 0
 speed = 60
 
+# Define the screen rectangle for clamping
+screen_rect = pygame.Rect(0, 0, width, height)
+
 # Sprite Classes
 class Frog(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.Surface((30,30)) #30 X 30 Sprite
         self.image.fill("green")
-        pygame.draw.circle(self.image, "white", (8,8), 5)#left eye
-        pygame.draw.circle(self.image, "white", (22, 8), 5) #right eye
+        pygame.draw.circle(self.image, "black", (8,8), 5)#left eye
+        pygame.draw.circle(self.image, "black", (22, 8), 5) #right eye
         self.rect = self.image.get_rect()
         self.rect.center = (width // 2, height - 75 + 37) #area center
         self.reset() #reset on restart
@@ -72,6 +75,8 @@ font = pygame.font.SysFont(None, 48) #just default size 48
 #game state variables
 PLAYING = 0
 WIN = 1
+PAUSE = 2
+LOBBY = 3
 game_state = PLAYING
 
 #Dialog button rectangles
@@ -94,6 +99,9 @@ while running:
                 frog.rect.x -= 50
             if event.key == pygame.K_RIGHT:
                 frog.rect.x += 50
+            #Checking for Pause action
+            if event.key == pygame.K_ESCAPE:
+                game_state = PAUSE
         if game_state == WIN and event.type == pygame.MOUSEBUTTONDOWN:  # Button clicks
             if restart_button.collidepoint(event.pos):
                 frog.reset()
@@ -115,6 +123,8 @@ while running:
         car3.rect.x += car3.speed * dt
         if car3.rect.x > width:
             car3.rect.x = -car3.rect.width
+        #Boundary for frog
+        frog.rect.clamp_ip(screen_rect)
 
     #Check for win condition
     if frog.rect.y < 75:
@@ -166,6 +176,12 @@ while running:
         quit_text = font.render("Quit", True, "white")
         screen.blit(restart_text, (restart_button.x + 10, restart_button.y + 10))
         screen.blit(quit_text, (quit_button.x + 25, quit_button.y + 10))
+
+    if game_state == PAUSE:
+        #Dialog for Pause game
+        dialog_rect = pygame.Rect(width // 2 -200, height // 2 - 125, 400, 350)
+        pygame.draw.rect(screen, "purple", dialog_rect)
+        pygame.draw.rect(screen, "green", dialog_rect, 2)
 
     # update screen
     pygame.display.flip()
