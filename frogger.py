@@ -79,7 +79,7 @@ car1 = Car("red", (50, 20), 0, 75 + lane_height // 4, 200)  # Lane 1 top, fast c
 car2 = Car("blue", (70, 30), width, 265 + 3 * lane_height // 4, -200)  # Lane 2 bottom, truck
 car3 = Car("yellow", (40, 25), 0, 455 + lane_height // 4, 200)  # Lane 3 top, compact car
 car4 = Car("green", (60,40), 0, 205 + lane_height // 2, -100) # Lane 1 bottom. semi truck
-car5 = Car("grey", (70,30), 0, 150 + lane_height // 4, 150) # Lane 2 top, truck
+car5 = Car("grey", (70,30), width, 150 + 3 * lane_height // 4, -150) # Lane 2 top, truck
 car6 = Car("orange", (70,30), 0, 440 + 3 * lane_height // 4, 150)# Lane 3 bottom, truck
 all_sprites.add(car1, car2, car3, car4, car5, car6)
 cars.add(car1, car2, car3, car4, car5, car6)
@@ -130,13 +130,20 @@ while running:
 
     """Update game state"""
     if game_state == PLAYING:
+        #set car speed
         car1.rect.x += car1.speed * dt
+        #set car direction
         if car1.rect.x > width:
             car1.rect.x = -car1.rect.width
         # TODO: Make cars 4,5,6 move appropriately
+        #speed
+        car4.rect.x += car4.speed * dt
+        #direction
         if car4.rect.x > width:
-            car4.rect.x = car4.rect.width
+            car4.rect.x = -car4.rect.width
+        #speed
         car2.rect.x += car2.speed * dt
+        #direction
         if car2.rect.x < -car2.rect.width:
             car2.rect.x = width
         car3.rect.x += car3.speed * dt
