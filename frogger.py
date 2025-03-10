@@ -1,8 +1,8 @@
 """
 Alex Schaffer
-March 3, 2025
-Homework 8 - Pygame Moving Objects
-Schaffer_HW8_MovingObjects
+March 10, 2025
+Homework 9 - Helper Functions
+Schaffer_HW9_HelperFunctions
 Description: Simple frogger game using pygame and Python 3
 """
 import pygame
